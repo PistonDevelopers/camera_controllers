@@ -1,0 +1,5 @@
+[package]
+
+name = "camera_controllers"
+version = "0.0.1"
+authors = ["stjahns <s.t.jahns@gmail.com>"]
