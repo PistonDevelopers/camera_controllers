@@ -4,4 +4,9 @@ A Rust library for controlling 3D cameras within the Piston ecosystem. Currently
 
 Maintainer: @stjahns
 
+## Goals
+
+- Quality and easy to use default controllers
+- Extension points for users to define their own controllers
+
 [How to contribute](https://github.com/PistonDevelopers/piston/blob/master/CONTRIBUTING.md)
