@@ -47,6 +47,10 @@ pub struct OrbitZoomCameraSettings<T=f32> {
     /// Modifier for orbiting speed (arbitrary unit)
     pub orbit_speed: T,
 
+    /// Modifier for pitch speed relative to orbiting speed (arbitrary unit).
+    /// To reverse pitch direction, set this to -1.
+    pub pitch_speed: T,
+
     /// Modifier for panning speed (arbitrary unit)
     pub pan_speed: T,
 
@@ -66,11 +70,11 @@ impl<T: Float + FromPrimitive> OrbitZoomCameraSettings<T> {
             zoom_button : Keyboard(Key::LCtrl),
             pan_button : Keyboard(Key::LShift),
             orbit_speed: FromPrimitive::from_f32(0.05).unwrap(),
+            pitch_speed: FromPrimitive::from_f32(1.0).unwrap(),
             pan_speed: FromPrimitive::from_f32(0.1).unwrap(),
             zoom_speed: FromPrimitive::from_f32(0.1).unwrap(),
         }
     }
-
 }
 
 ///
@@ -166,7 +170,7 @@ OrbitZoomCamera<T> {
             let dy = dy * self.settings.orbit_speed;
 
             self.yaw = self.yaw + dx;
-            self.pitch = self.pitch + dy;
+            self.pitch = self.pitch + dy*self.settings.pitch_speed;
             self.rotation = quaternion::mul(
                 quaternion::axis_angle([_0, _1, _0], self.yaw),
                 quaternion::axis_angle([_1, _0, _0], self.pitch)
