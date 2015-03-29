@@ -6,19 +6,15 @@
 
 use event::GenericEvent;
 
-use std::num::{Float, FromPrimitive};
-use vecmath::{
-    Vector3,
-    vec3_add,
-    vec3_scale
-};
+use std::num::{ Float, FromPrimitive };
+use vecmath::{ Vector3, vec3_add, vec3_scale };
 
 use quaternion;
-use quaternion::{ Quaternion };
+use quaternion::Quaternion;
 
 use { input, Camera };
 
-use input::Button::{Keyboard, Mouse};
+use input::Button::{ Keyboard, Mouse };
 use input::keyboard::Key;
 use input::mouse::MouseButton;
 
@@ -128,7 +124,7 @@ OrbitZoomCamera<T> {
     ///
     pub fn camera(&self, _dt: f64) -> Camera<T> {
         let target_to_camera = quaternion::rotate_vector(
-            self.rotation, 
+            self.rotation,
             [Float::zero(), Float::zero(), self.distance]
         );
         let mut camera = Camera::new(vec3_add(self.target, target_to_camera));
