@@ -1,15 +1,12 @@
-#![allow(missing_docs)]
 #![allow(dead_code)]
 
 //! A first person camera.
 
-use std::num::{Float, FromPrimitive};
+use std::num::{ Float, FromPrimitive };
+use std::marker::Reflect;
 use event::GenericEvent;
 use input::Button;
-use {
-    input,
-    Camera,
-};
+use { input, Camera };
 use vecmath::consts::Radians;
 
 bitflags!(flags Keys: u8 {
@@ -127,7 +124,7 @@ FirstPerson<T> {
     pub fn camera(&self, dt: f64) -> Camera<T> {
         let dt: T = FromPrimitive::from_f64(dt).unwrap();
         let dh = dt * self.velocity * self.settings.speed_horizontal;
-        let [dx, dy, dz] = self.direction;
+        let (dx, dy, dz) = (self.direction[0], self.direction[1], self.direction[2]);
         let (s, c) = (self.yaw.sin(), self.yaw.cos());
         let mut camera = Camera::new([
             self.position[0] + (s * dx - c * dz) * dh,
@@ -139,7 +136,7 @@ FirstPerson<T> {
     }
 
     /// Handles game event and updates camera.
-    pub fn event<E: GenericEvent>(&mut self, e: &E) {
+    pub fn event<E>(&mut self, e: &E) where E: GenericEvent + Reflect {
         use event::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
 
         e.update(|args| {
@@ -161,10 +158,10 @@ FirstPerson<T> {
         let sqrt2: T = Float::sqrt(FromPrimitive::from_f64(2f64).unwrap());
         let _0: T = Float::zero();
         let _1: T = Float::one();
-        let _2: T = FromPrimitive::from_int(2).unwrap();
-        let _3: T = FromPrimitive::from_int(3).unwrap();
-        let _4: T = FromPrimitive::from_int(4).unwrap();
-        let _360: T = FromPrimitive::from_int(360).unwrap();
+        let _2: T = FromPrimitive::from_isize(2).unwrap();
+        let _3: T = FromPrimitive::from_isize(3).unwrap();
+        let _4: T = FromPrimitive::from_isize(4).unwrap();
+        let _360: T = FromPrimitive::from_isize(360).unwrap();
         e.mouse_relative(|dx, dy| {
             let dx: T = FromPrimitive::from_f64(dx).unwrap();
             let dy: T = FromPrimitive::from_f64(dy).unwrap();
@@ -173,7 +170,7 @@ FirstPerson<T> {
             *pitch = (*pitch).min(pi / _2).max(-pi / _2);
         });
         e.press(|button| {
-            let [dx, dy, dz] = *direction;
+            let (dx, dy, dz) = (direction[0], direction[1], direction[2]);
             let sgn = |x: T| if x == _0 { _0 } else { x.signum() };
             let mut set = |k, x: T, y: T, z: T| {
                 let (x, z) = (sgn(x), sgn(z));
@@ -203,7 +200,7 @@ FirstPerson<T> {
             }
         });
         e.release(|button| {
-            let [dx, dy, dz] = *direction;
+            let (dx, dy, dz) = (direction[0], direction[1], direction[2]);
             let sgn = |x: T| if x == _0 { _0 } else { x.signum() };
             let mut set = |x: T, y: T, z: T| {
                 let (x, z) = (sgn(x), sgn(z));
@@ -237,5 +234,3 @@ FirstPerson<T> {
         });
     }
 }
-
-
