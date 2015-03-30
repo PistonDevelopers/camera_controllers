@@ -3,7 +3,6 @@
 //! A first person camera.
 
 use std::num::{ Float, FromPrimitive };
-use std::marker::Reflect;
 use event::GenericEvent;
 use input::Button;
 use { input, Camera };
@@ -136,7 +135,7 @@ FirstPerson<T> {
     }
 
     /// Handles game event and updates camera.
-    pub fn event<E>(&mut self, e: &E) where E: GenericEvent + Reflect {
+    pub fn event<E>(&mut self, e: &E) where E: GenericEvent {
         use event::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
 
         e.update(|args| {
