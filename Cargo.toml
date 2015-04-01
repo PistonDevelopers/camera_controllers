@@ -1,12 +1,12 @@
 [package]
 
 name = "camera_controllers"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
     "bvssvni <bvssvni@gmail.com>",
     "stjahns <s.t.jahns@gmail.com>"
 ]
-
+keywords = ["camera", "controllers", "piston", "3d"]
 description = "A library for 3D camera control."
 license = "MIT"
 readme = "README.md"
@@ -23,15 +23,21 @@ bitflags = "*"
 
 [dependencies.piston3d-cam]
 git = "https://github.com/PistonDevelopers/cam"
+#version = "0.0.5"
 
 [dependencies.pistoncore-event]
 git = "https://github.com/PistonDevelopers/event"
+#version = "0.0.12"
 
 [dependencies.vecmath]
 git = "https://github.com/PistonDevelopers/vecmath"
+#version = "0.0.5"
 
 [dependencies.pistoncore-input]
 git = "https://github.com/PistonDevelopers/input"
+#version = "0.0.7"
 
 [dependencies.quaternion]
 git = "https://github.com/PistonDevelopers/quaternion.git"
+#version = "0.0.5"
+
