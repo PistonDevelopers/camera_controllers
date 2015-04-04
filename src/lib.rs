@@ -1,16 +1,15 @@
 #![crate_name = "camera_controllers"]
 #![deny(missing_docs)]
-#![feature(core, std_misc)]
 
 //! A library for 3D camera control
 
 #[macro_use]
 extern crate bitflags;
-extern crate event;
-extern crate input;
+extern crate piston;
 extern crate vecmath;
 extern crate quaternion;
 extern crate cam;
+extern crate num;
 
 pub use cam::{
     Camera,

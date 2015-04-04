@@ -4,19 +4,20 @@
 //! A 3dsMax / Blender style camera that orbits about a target position
 //!
 
-use event::GenericEvent;
+use piston::event::GenericEvent;
 
-use std::num::{ Float, FromPrimitive };
+use num::{ Float, FromPrimitive, Zero, One };
 use vecmath::{ Vector3, vec3_add, vec3_scale };
 
 use quaternion;
 use quaternion::Quaternion;
 
-use { input, Camera };
+use piston::input;
+use piston::input::Button::{ Keyboard, Mouse };
+use piston::input::keyboard::Key;
+use piston::input::mouse::MouseButton;
 
-use input::Button::{ Keyboard, Mouse };
-use input::keyboard::Key;
-use input::mouse::MouseButton;
+use Camera;
 
 bitflags!(
     flags Keys: u8 {
@@ -112,8 +113,8 @@ OrbitZoomCamera<T> {
             target: target,
             rotation: quaternion::id(),
             distance: FromPrimitive::from_f32(10.0).unwrap(),
-            pitch: Float::zero(),
-            yaw: Float::zero(),
+            pitch: Zero::zero(),
+            yaw: Zero::zero(),
             keys: Keys::empty(),
             settings: settings
         }
@@ -125,7 +126,7 @@ OrbitZoomCamera<T> {
     pub fn camera(&self, _dt: f64) -> Camera<T> {
         let target_to_camera = quaternion::rotate_vector(
             self.rotation,
-            [Float::zero(), Float::zero(), self.distance]
+            [Zero::zero(), Zero::zero(), self.distance]
         );
         let mut camera = Camera::new(vec3_add(self.target, target_to_camera));
         camera.set_rotation(self.rotation);
@@ -138,8 +139,8 @@ OrbitZoomCamera<T> {
     ///
     fn control_camera(&mut self, dx: T, dy: T) {
 
-        let _1 = Float::one();
-        let _0 = Float::zero();
+        let _1 = One::one();
+        let _0 = Zero::zero();
 
         if self.keys.contains(PAN) {
 
@@ -180,7 +181,7 @@ OrbitZoomCamera<T> {
     ///
     pub fn event<E: GenericEvent>(&mut self, e: &E) {
 
-        use event::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
+        use piston::event::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
 
         e.mouse_scroll(|dx, dy| {
             let dx: T = FromPrimitive::from_f64(dx).unwrap();
