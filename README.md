@@ -1,4 +1,4 @@
-# camera_controllers
+# camera_controllers [![Build Status](https://travis-ci.org/PistonDevelopers/camera_controllers.svg?branch=master)](https://travis-ci.org/PistonDevelopers/camera_controllers)
 
 A Rust library for controlling 3D cameras within the Piston ecosystem. Currently includes a first-person controller and a Blender/3dsMax-style orbiting camera controller.
 
