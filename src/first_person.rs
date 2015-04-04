@@ -2,11 +2,12 @@
 
 //! A first person camera.
 
-use std::num::{ Float, FromPrimitive };
-use event::GenericEvent;
-use input::Button;
-use { input, Camera };
+use num::{ Float, FromPrimitive, Zero, One };
+use piston::event::GenericEvent;
+use piston::input::{ self, Button };
 use vecmath::consts::Radians;
+
+use Camera;
 
 bitflags!(flags Keys: u8 {
     const MOVE_FORWARD  = 0b00000001,
@@ -46,8 +47,8 @@ pub struct FirstPersonSettings<T=f32> {
 impl<T: Float> FirstPersonSettings<T> {
     /// Creates new first person camera settings with wasd defaults.
     pub fn keyboard_wasd() -> FirstPersonSettings<T> {
-        use input::Button::Keyboard;
-        use input::keyboard::Key;
+        use piston::input::Button::Keyboard;
+        use piston::input::keyboard::Key;
 
         FirstPersonSettings {
             move_forward_button: Keyboard(Key::W),
@@ -57,15 +58,15 @@ impl<T: Float> FirstPersonSettings<T> {
             fly_up_button: Keyboard(Key::Space),
             fly_down_button: Keyboard(Key::LShift),
             move_faster_button: Keyboard(Key::LCtrl),
-            speed_horizontal: Float::one(),
-            speed_vertical: Float::one(),
+            speed_horizontal: One::one(),
+            speed_vertical: One::one(),
         }
     }
 
     /// Creates a new first person camera settings with esdf defaults.
     pub fn keyboard_esdf() -> FirstPersonSettings<T> {
-        use input::Button::Keyboard;
-        use input::keyboard::Key;
+        use piston::input::Button::Keyboard;
+        use piston::input::keyboard::Key;
 
         FirstPersonSettings {
             move_forward_button: Keyboard(Key::E),
@@ -75,8 +76,8 @@ impl<T: Float> FirstPersonSettings<T> {
             fly_up_button: Keyboard(Key::Space),
             fly_down_button: Keyboard(Key::Z),
             move_faster_button: Keyboard(Key::LShift),
-            speed_horizontal: Float::one(),
-            speed_vertical: Float::one(),
+            speed_horizontal: One::one(),
+            speed_vertical: One::one(),
         }
     }
 }
@@ -107,7 +108,7 @@ FirstPerson<T> {
         position: [T; 3],
         settings: FirstPersonSettings<T>
     ) -> FirstPerson<T> {
-        let _0: T = Float::zero();
+        let _0: T = Zero::zero();
         FirstPerson {
             settings: settings,
             yaw: _0,
@@ -115,7 +116,7 @@ FirstPerson<T> {
             keys: Keys::empty(),
             direction: [_0, _0, _0],
             position: position,
-            velocity: Float::one(),
+            velocity: One::one(),
         }
     }
 
@@ -136,7 +137,7 @@ FirstPerson<T> {
 
     /// Handles game event and updates camera.
     pub fn event<E>(&mut self, e: &E) where E: GenericEvent {
-        use event::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
+        use piston::event::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
 
         e.update(|args| {
             let cam = self.camera(args.dt);
@@ -155,8 +156,8 @@ FirstPerson<T> {
 
         let pi: T = Radians::_180();
         let sqrt2: T = Float::sqrt(FromPrimitive::from_f64(2f64).unwrap());
-        let _0: T = Float::zero();
-        let _1: T = Float::one();
+        let _0: T = Zero::zero();
+        let _1: T = One::one();
         let _2: T = FromPrimitive::from_isize(2).unwrap();
         let _3: T = FromPrimitive::from_isize(3).unwrap();
         let _4: T = FromPrimitive::from_isize(4).unwrap();

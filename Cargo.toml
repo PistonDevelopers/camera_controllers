@@ -25,19 +25,17 @@ bitflags = "*"
 git = "https://github.com/PistonDevelopers/cam"
 #version = "0.0.5"
 
-[dependencies.pistoncore-event]
-git = "https://github.com/PistonDevelopers/event"
-#version = "0.0.12"
+[dependencies.piston]
+git = "https://github.com/PistonDevelopers/piston"
+#version = "0.1.0"
 
 [dependencies.vecmath]
 git = "https://github.com/PistonDevelopers/vecmath"
 #version = "0.0.5"
 
-[dependencies.pistoncore-input]
-git = "https://github.com/PistonDevelopers/input"
-#version = "0.0.7"
-
 [dependencies.quaternion]
 git = "https://github.com/PistonDevelopers/quaternion.git"
 #version = "0.0.5"
 
+[dependencies]
+num = "0.1.21"
