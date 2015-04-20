@@ -6,8 +6,8 @@
 
 use piston::event::GenericEvent;
 
-use num::{ Float, FromPrimitive, Zero, One };
 use vecmath::{ Vector3, vec3_add, vec3_scale };
+use vecmath::traits::Float;
 
 use quaternion;
 use quaternion::Quaternion;
@@ -55,7 +55,7 @@ pub struct OrbitZoomCameraSettings<T=f32> {
     pub zoom_speed: T,
 }
 
-impl<T: Float + FromPrimitive> OrbitZoomCameraSettings<T> {
+impl<T: Float> OrbitZoomCameraSettings<T> {
 
     ///
     /// Clicking and dragging OR two-finger scrolling will orbit camera,
@@ -66,10 +66,10 @@ impl<T: Float + FromPrimitive> OrbitZoomCameraSettings<T> {
             orbit_button : Mouse(MouseButton::Left),
             zoom_button : Keyboard(Key::LCtrl),
             pan_button : Keyboard(Key::LShift),
-            orbit_speed: FromPrimitive::from_f32(0.05).unwrap(),
-            pitch_speed: FromPrimitive::from_f32(1.0).unwrap(),
-            pan_speed: FromPrimitive::from_f32(0.1).unwrap(),
-            zoom_speed: FromPrimitive::from_f32(0.1).unwrap(),
+            orbit_speed: T::from_f32(0.05),
+            pitch_speed: T::from_f32(1.0),
+            pan_speed: T::from_f32(0.1),
+            zoom_speed: T::from_f32(0.1),
         }
     }
 }
@@ -102,7 +102,7 @@ pub struct OrbitZoomCamera<T=f32> {
 }
 
 
-impl<T: Float + FromPrimitive>
+impl<T: Float>
 OrbitZoomCamera<T> {
 
     ///
@@ -112,9 +112,9 @@ OrbitZoomCamera<T> {
         OrbitZoomCamera {
             target: target,
             rotation: quaternion::id(),
-            distance: FromPrimitive::from_f32(10.0).unwrap(),
-            pitch: Zero::zero(),
-            yaw: Zero::zero(),
+            distance: T::from_f32(10.0),
+            pitch: T::zero(),
+            yaw: T::zero(),
             keys: Keys::empty(),
             settings: settings
         }
@@ -126,7 +126,7 @@ OrbitZoomCamera<T> {
     pub fn camera(&self, _dt: f64) -> Camera<T> {
         let target_to_camera = quaternion::rotate_vector(
             self.rotation,
-            [Zero::zero(), Zero::zero(), self.distance]
+            [T::zero(), T::zero(), self.distance]
         );
         let mut camera = Camera::new(vec3_add(self.target, target_to_camera));
         camera.set_rotation(self.rotation);
@@ -139,8 +139,8 @@ OrbitZoomCamera<T> {
     ///
     fn control_camera(&mut self, dx: T, dy: T) {
 
-        let _1 = One::one();
-        let _0 = Zero::zero();
+        let _1 = T::one();
+        let _0 = T::zero();
 
         if self.keys.contains(PAN) {
 
@@ -184,14 +184,14 @@ OrbitZoomCamera<T> {
         use piston::event::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
 
         e.mouse_scroll(|dx, dy| {
-            let dx: T = FromPrimitive::from_f64(dx).unwrap();
-            let dy: T = FromPrimitive::from_f64(dy).unwrap();
+            let dx = T::from_f64(dx);
+            let dy = T::from_f64(dy);
             self.control_camera(dx, dy);
         });
 
         e.mouse_relative(|dx, dy| {
-            let dx: T = FromPrimitive::from_f64(dx).unwrap();
-            let dy: T = FromPrimitive::from_f64(dy).unwrap();
+            let dx = T::from_f64(dx);
+            let dy = T::from_f64(dy);
             if self.keys.contains(ORBIT){
                 self.control_camera(-dx, dy);
             }

@@ -2,10 +2,9 @@
 
 //! A first person camera.
 
-use num::{ Float, FromPrimitive, Zero, One };
 use piston::event::GenericEvent;
 use piston::input::{ self, Button };
-use vecmath::consts::Radians;
+use vecmath::traits::{ Float, Radians };
 
 use Camera;
 
@@ -44,7 +43,9 @@ pub struct FirstPersonSettings<T=f32> {
     pub speed_vertical: T,
 }
 
-impl<T: Float> FirstPersonSettings<T> {
+impl<T> FirstPersonSettings<T>
+    where T: Float
+{
     /// Creates new first person camera settings with wasd defaults.
     pub fn keyboard_wasd() -> FirstPersonSettings<T> {
         use piston::input::Button::Keyboard;
@@ -58,8 +59,8 @@ impl<T: Float> FirstPersonSettings<T> {
             fly_up_button: Keyboard(Key::Space),
             fly_down_button: Keyboard(Key::LShift),
             move_faster_button: Keyboard(Key::LCtrl),
-            speed_horizontal: One::one(),
-            speed_vertical: One::one(),
+            speed_horizontal: T::one(),
+            speed_vertical: T::one(),
         }
     }
 
@@ -76,8 +77,8 @@ impl<T: Float> FirstPersonSettings<T> {
             fly_up_button: Keyboard(Key::Space),
             fly_down_button: Keyboard(Key::Z),
             move_faster_button: Keyboard(Key::LShift),
-            speed_horizontal: One::one(),
-            speed_vertical: One::one(),
+            speed_horizontal: T::one(),
+            speed_vertical: T::one(),
         }
     }
 }
@@ -100,15 +101,15 @@ pub struct FirstPerson<T=f32> {
     keys: Keys,
 }
 
-impl<T: Float + FromPrimitive + Copy + Radians>
-FirstPerson<T> {
-
+impl<T> FirstPerson<T>
+    where T: Float
+{
     /// Creates a new first person camera.
     pub fn new(
         position: [T; 3],
         settings: FirstPersonSettings<T>
     ) -> FirstPerson<T> {
-        let _0: T = Zero::zero();
+        let _0: T = T::zero();
         FirstPerson {
             settings: settings,
             yaw: _0,
@@ -116,13 +117,13 @@ FirstPerson<T> {
             keys: Keys::empty(),
             direction: [_0, _0, _0],
             position: position,
-            velocity: One::one(),
+            velocity: T::one(),
         }
     }
 
     /// Computes camera.
     pub fn camera(&self, dt: f64) -> Camera<T> {
-        let dt: T = FromPrimitive::from_f64(dt).unwrap();
+        let dt = T::from_f64(dt);
         let dh = dt * self.velocity * self.settings.speed_horizontal;
         let (dx, dy, dz) = (self.direction[0], self.direction[1], self.direction[2]);
         let (s, c) = (self.yaw.sin(), self.yaw.cos());
@@ -155,16 +156,21 @@ FirstPerson<T> {
         } = self;
 
         let pi: T = Radians::_180();
-        let sqrt2: T = Float::sqrt(FromPrimitive::from_f64(2f64).unwrap());
-        let _0: T = Zero::zero();
-        let _1: T = One::one();
-        let _2: T = FromPrimitive::from_isize(2).unwrap();
-        let _3: T = FromPrimitive::from_isize(3).unwrap();
-        let _4: T = FromPrimitive::from_isize(4).unwrap();
-        let _360: T = FromPrimitive::from_isize(360).unwrap();
+
+
+        let _0 = T::zero();
+        let _1 = T::one();
+        let _2 =  _1 + _1;
+        let _3 = _2 + _1;
+        let _4 = _3 + _1;
+        let _360 = T::from_isize(360);
+        let sqrt2 = _2.sqrt();
+
         e.mouse_relative(|dx, dy| {
-            let dx: T = FromPrimitive::from_f64(dx).unwrap();
-            let dy: T = FromPrimitive::from_f64(dy).unwrap();
+
+            let dx = T::from_f64(dx);
+            let dy = T::from_f64(dy);
+
             *yaw = (*yaw - dx / _360 * pi / _4) % (_2 * pi);
             *pitch = *pitch + dy / _360 * pi / _4;
             *pitch = (*pitch).min(pi / _2).max(-pi / _2);
