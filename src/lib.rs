@@ -9,7 +9,6 @@ extern crate piston;
 extern crate vecmath;
 extern crate quaternion;
 extern crate cam;
-extern crate num;
 
 pub use cam::{
     Camera,

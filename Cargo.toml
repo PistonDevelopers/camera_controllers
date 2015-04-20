@@ -36,6 +36,3 @@ git = "https://github.com/PistonDevelopers/vecmath"
 [dependencies.quaternion]
 git = "https://github.com/PistonDevelopers/quaternion.git"
 #version = "0.0.5"
-
-[dependencies]
-num = "0.1.21"
