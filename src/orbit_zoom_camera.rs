@@ -1,8 +1,6 @@
 #![allow(dead_code)]
 
-//!
 //! A 3dsMax / Blender style camera that orbits about a target position
-//!
 
 use piston::event::GenericEvent;
 
@@ -27,9 +25,7 @@ bitflags!(
     }
 );
 
-///
 /// Specifies key bindings and speed modifiers for OrbitZoomCamera
-///
 pub struct OrbitZoomCameraSettings<T=f32> {
 
     /// Which button to press to orbit with mouse
@@ -57,26 +53,78 @@ pub struct OrbitZoomCameraSettings<T=f32> {
 
 impl<T: Float> OrbitZoomCameraSettings<T> {
 
-    ///
     /// Clicking and dragging OR two-finger scrolling will orbit camera,
     /// with LShift as pan modifer and LCtrl as zoom modifier
-    ///
     pub fn default() -> OrbitZoomCameraSettings<T> {
         OrbitZoomCameraSettings {
             orbit_button : Mouse(MouseButton::Left),
             zoom_button : Keyboard(Key::LCtrl),
             pan_button : Keyboard(Key::LShift),
             orbit_speed: T::from_f32(0.05),
-            pitch_speed: T::from_f32(1.0),
+            pitch_speed: T::from_f32(0.1),
             pan_speed: T::from_f32(0.1),
             zoom_speed: T::from_f32(0.1),
         }
     }
+
+    /// Set the button for orbiting
+    pub fn orbit_button(self, button: input::Button) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            orbit_button: button,
+            .. self
+        }
+    }
+
+    /// Set the button for zooming
+    pub fn zoom_button(self, button: input::Button) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            zoom_button: button,
+            .. self
+        }
+    }
+
+    /// Set the button for panning
+    pub fn pan_button(self, button: input::Button) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            pan_button: button,
+            .. self
+        }
+    }
+
+    /// Set the orbit speed modifier
+    pub fn orbit_speed(self, s: T) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            orbit_speed: s,
+            .. self
+        }
+    }
+
+    /// Set the pitch speed modifier
+    pub fn pitch_speed(self, s: T) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            pitch_speed: s,
+            .. self
+        }
+    }
+
+    /// Set the pan speed modifier
+    pub fn pan_speed(self, s: T) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            pan_speed: s,
+            .. self
+        }
+    }
+
+    /// Set the zoom speed modifier
+    pub fn zoom_speed(self, s: T) -> OrbitZoomCameraSettings<T> {
+        OrbitZoomCameraSettings {
+            zoom_speed: s,
+            .. self
+        }
+    }
 }
 
-///
 /// A 3dsMax / Blender-style camera that orbits around a target point
-///
 pub struct OrbitZoomCamera<T=f32> {
 
     /// origin of camera rotation
@@ -105,9 +153,7 @@ pub struct OrbitZoomCamera<T=f32> {
 impl<T: Float>
 OrbitZoomCamera<T> {
 
-    ///
     /// Create a new OrbitZoomCamera targeting the given coordinates
-    ///
     pub fn new(target: [T; 3], settings: OrbitZoomCameraSettings<T>) -> OrbitZoomCamera<T> {
         OrbitZoomCamera {
             target: target,
@@ -120,9 +166,7 @@ OrbitZoomCamera<T> {
         }
     }
 
-    ///
     /// Return a Camera for the current OrbitZoomCamera configuration
-    ///
     pub fn camera(&self, _dt: f64) -> Camera<T> {
         let target_to_camera = quaternion::rotate_vector(
             self.rotation,
@@ -133,10 +177,8 @@ OrbitZoomCamera<T> {
         camera
     }
 
-    ///
     /// Orbit the camera using the given horizontal and vertical params,
     /// or zoom or pan if the appropriate modifier keys are pressed
-    ///
     fn control_camera(&mut self, dx: T, dy: T) {
 
         let _1 = T::one();
@@ -176,9 +218,7 @@ OrbitZoomCamera<T> {
         }
     }
 
-    ///
     /// Respond to scroll and key press/release events
-    ///
     pub fn event<E: GenericEvent>(&mut self, e: &E) {
 
         use piston::event::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
