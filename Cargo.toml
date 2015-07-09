@@ -1,7 +1,7 @@
 [package]
 
 name = "camera_controllers"
-version = "0.2.0"
+version = "0.3.0"
 authors = [
     "bvssvni <bvssvni@gmail.com>",
     "stjahns <s.t.jahns@gmail.com>"
@@ -19,8 +19,8 @@ name = "camera_controllers"
 path = "src/lib.rs"
 
 [dependencies]
-bitflags = "0.2.1"
+bitflags = "0.3.2"
 piston3d-cam = "0.1.0"
-piston = "0.2.0"
-vecmath = "0.1.0"
+piston = "0.3.0"
+vecmath = "0.1.1"
 quaternion = "0.1.0"
