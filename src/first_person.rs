@@ -2,8 +2,7 @@
 
 //! A first person camera.
 
-use piston::event::GenericEvent;
-use piston::input::{ self, Button };
+use input::{ self, Button, GenericEvent };
 use vecmath::traits::{ Float, Radians };
 
 use Camera;
@@ -48,8 +47,8 @@ impl<T> FirstPersonSettings<T>
 {
     /// Creates new first person camera settings with wasd defaults.
     pub fn keyboard_wasd() -> FirstPersonSettings<T> {
-        use piston::input::Button::Keyboard;
-        use piston::input::keyboard::Key;
+        use input::Button::Keyboard;
+        use input::Key;
 
         FirstPersonSettings {
             move_forward_button: Keyboard(Key::W),
@@ -66,8 +65,8 @@ impl<T> FirstPersonSettings<T>
 
     /// Creates a new first person camera settings with esdf defaults.
     pub fn keyboard_esdf() -> FirstPersonSettings<T> {
-        use piston::input::Button::Keyboard;
-        use piston::input::keyboard::Key;
+        use input::Button::Keyboard;
+        use input::Key;
 
         FirstPersonSettings {
             move_forward_button: Keyboard(Key::E),
@@ -138,7 +137,7 @@ impl<T> FirstPerson<T>
 
     /// Handles game event and updates camera.
     pub fn event<E>(&mut self, e: &E) where E: GenericEvent {
-        use piston::event::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
+        use input::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
 
         e.update(|args| {
             let cam = self.camera(args.dt);

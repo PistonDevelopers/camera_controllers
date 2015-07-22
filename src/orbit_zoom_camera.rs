@@ -2,18 +2,15 @@
 
 //! A 3dsMax / Blender style camera that orbits about a target position
 
-use piston::event::GenericEvent;
-
 use vecmath::{ Vector3, vec3_add, vec3_scale };
 use vecmath::traits::Float;
 
 use quaternion;
 use quaternion::Quaternion;
 
-use piston::input;
-use piston::input::Button::{ Keyboard, Mouse };
-use piston::input::keyboard::Key;
-use piston::input::mouse::MouseButton;
+use input;
+use input::{ GenericEvent, Key, MouseButton };
+use input::Button::{ Keyboard, Mouse };
 
 use Camera;
 
@@ -221,7 +218,7 @@ OrbitZoomCamera<T> {
     /// Respond to scroll and key press/release events
     pub fn event<E: GenericEvent>(&mut self, e: &E) {
 
-        use piston::event::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
+        use input::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
 
         e.mouse_scroll(|dx, dy| {
             let dx = T::from_f64(dx);

@@ -5,7 +5,7 @@
 
 #[macro_use]
 extern crate bitflags;
-extern crate piston;
+extern crate input;
 extern crate vecmath;
 extern crate quaternion;
 extern crate cam;
