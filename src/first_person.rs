@@ -80,6 +80,24 @@ impl<T> FirstPersonSettings<T>
             speed_vertical: T::one(),
         }
     }
+
+    /// Creates new first person camera settings with zqsd defaults (azerty keyboard layout).
+    pub fn keyboard_zqsd() -> FirstPersonSettings<T> {
+        use input::Button::Keyboard;
+        use input::Key;
+
+        FirstPersonSettings {
+            move_forward_button: Keyboard(Key::Z),
+            move_backward_button: Keyboard(Key::S),
+            strafe_left_button: Keyboard(Key::Q),
+            strafe_right_button: Keyboard(Key::D),
+            fly_up_button: Keyboard(Key::Space),
+            fly_down_button: Keyboard(Key::LShift),
+            move_faster_button: Keyboard(Key::LCtrl),
+            speed_horizontal: T::one(),
+            speed_vertical: T::one(),
+        }
+    }
 }
 
 /// Models a flying first person camera.
