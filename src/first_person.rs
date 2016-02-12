@@ -2,7 +2,7 @@
 
 //! A first person camera.
 
-use input::{ self, Button, GenericEvent };
+use input::{ Button, GenericEvent };
 use vecmath::traits::{ Float, Radians };
 
 use Camera;
@@ -19,19 +19,19 @@ bitflags!(flags Keys: u8 {
 /// First person camera settings.
 pub struct FirstPersonSettings<T=f32> {
     /// Which button to press to move forward.
-    pub move_forward_button: input::Button,
+    pub move_forward_button: Button,
     /// Which button to press to move backward.
-    pub move_backward_button: input::Button,
+    pub move_backward_button: Button,
     /// Which button to press to strafe left.
-    pub strafe_left_button: input::Button,
+    pub strafe_left_button: Button,
     /// Which button to press to strafe right.
-    pub strafe_right_button: input::Button,
+    pub strafe_right_button: Button,
     /// Which button to press to fly up.
-    pub fly_up_button: input::Button,
+    pub fly_up_button: Button,
     /// Which button to press to fly down.
-    pub fly_down_button: input::Button,
+    pub fly_down_button: Button,
     /// Which button to press to move faster.
-    pub move_faster_button: input::Button,
+    pub move_faster_button: Button,
     /// The horizontal movement speed.
     ///
     /// This is measured in units per second.
