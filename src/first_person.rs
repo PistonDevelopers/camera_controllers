@@ -7,7 +7,7 @@ use vecmath::traits::{ Float, Radians };
 
 use Camera;
 
-bitflags!(flags Keys: u8 {
+bitflags!(pub flags Keys: u8 {
     const MOVE_FORWARD  = 0b00000001,
     const MOVE_BACKWARD = 0b00000010,
     const STRAFE_LEFT   = 0b00000100,
