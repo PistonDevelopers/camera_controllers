@@ -40,6 +40,14 @@ pub struct FirstPersonSettings<T=f32> {
     ///
     /// This is measured in units per second.
     pub speed_vertical: T,
+    /// The horizontal mouse sensitivity.
+    /// 
+    /// This is a multiplier applied to horizontal mouse movements.
+    pub mouse_sensitivity_horizontal: T,
+    /// The vertical mouse sensitivity.
+    ///
+    /// This is a multiplier applied to vertical mouse movements.
+    pub mouse_sensitivity_vertical: T,
 }
 
 impl<T> FirstPersonSettings<T>
@@ -60,6 +68,8 @@ impl<T> FirstPersonSettings<T>
             move_faster_button: Keyboard(Key::LCtrl),
             speed_horizontal: T::one(),
             speed_vertical: T::one(),
+            mouse_sensitivity_horizontal: T::one(),
+            mouse_sensitivity_vertical: T::one(),
         }
     }
 
@@ -78,6 +88,8 @@ impl<T> FirstPersonSettings<T>
             move_faster_button: Keyboard(Key::LShift),
             speed_horizontal: T::one(),
             speed_vertical: T::one(),
+            mouse_sensitivity_horizontal: T::one(),
+            mouse_sensitivity_vertical: T::one(),
         }
     }
 
@@ -96,6 +108,8 @@ impl<T> FirstPersonSettings<T>
             move_faster_button: Keyboard(Key::LCtrl),
             speed_horizontal: T::one(),
             speed_vertical: T::one(),
+            mouse_sensitivity_horizontal: T::one(),
+            mouse_sensitivity_vertical: T::one(),
         }
     }
 }
@@ -177,7 +191,7 @@ impl<T> FirstPerson<T>
 
         let _0 = T::zero();
         let _1 = T::one();
-        let _2 =  _1 + _1;
+        let _2 = _1 + _1;
         let _3 = _2 + _1;
         let _4 = _3 + _1;
         let _360 = T::from_isize(360);
@@ -185,8 +199,8 @@ impl<T> FirstPerson<T>
 
         e.mouse_relative(|dx, dy| {
 
-            let dx = T::from_f64(dx);
-            let dy = T::from_f64(dy);
+            let dx = T::from_f64(dx) * settings.mouse_sensitivity_horizontal;
+            let dy = T::from_f64(dy) * settings.mouse_sensitivity_vertical;
 
             *yaw = (*yaw - dx / _360 * pi / _4) % (_2 * pi);
             *pitch = *pitch + dy / _360 * pi / _4;
