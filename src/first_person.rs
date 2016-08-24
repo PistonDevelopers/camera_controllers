@@ -169,8 +169,6 @@ impl<T> FirstPerson<T>
 
     /// Handles game event and updates camera.
     pub fn event<E>(&mut self, e: &E) where E: GenericEvent {
-        use input::{ MouseRelativeEvent, PressEvent, ReleaseEvent, UpdateEvent };
-
         e.update(|args| {
             let cam = self.camera(args.dt);
             self.position = cam.position;
