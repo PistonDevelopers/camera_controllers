@@ -217,9 +217,6 @@ OrbitZoomCamera<T> {
 
     /// Respond to scroll and key press/release events
     pub fn event<E: GenericEvent>(&mut self, e: &E) {
-
-        use input::{ MouseRelativeEvent, MouseScrollEvent, PressEvent, ReleaseEvent };
-
         e.mouse_scroll(|dx, dy| {
             let dx = T::from_f64(dx);
             let dy = T::from_f64(dy);
