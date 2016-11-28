@@ -1,7 +1,7 @@
 [package]
 
 name = "camera_controllers"
-version = "0.17.0"
+version = "0.18.0"
 authors = [
     "bvssvni <bvssvni@gmail.com>",
     "stjahns <s.t.jahns@gmail.com>"
@@ -21,6 +21,6 @@ path = "src/lib.rs"
 [dependencies]
 bitflags = "0.7.0"
 piston3d-cam = "0.2.0"
-pistoncore-input = "0.14.0"
+pistoncore-input = "0.15.0"
 vecmath = "0.2.0"
 quaternion = "0.2.0"
