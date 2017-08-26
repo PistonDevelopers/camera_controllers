@@ -15,10 +15,10 @@ use input::Button::{ Keyboard, Mouse };
 use Camera;
 
 bitflags!(
-    pub flags Keys: u8 {
-        const ZOOM  = 0b00000001,
-        const PAN   = 0b00000010,
-        const ORBIT = 0b00000100,
+    pub struct Keys: u8 {
+        const ZOOM  = 0b00000001;
+        const PAN   = 0b00000010;
+        const ORBIT = 0b00000100;
     }
 );
 

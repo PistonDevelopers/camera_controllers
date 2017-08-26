@@ -7,13 +7,13 @@ use vecmath::traits::{ Float, Radians };
 
 use Camera;
 
-bitflags!(pub flags Keys: u8 {
-    const MOVE_FORWARD  = 0b00000001,
-    const MOVE_BACKWARD = 0b00000010,
-    const STRAFE_LEFT   = 0b00000100,
-    const STRAFE_RIGHT  = 0b00001000,
-    const FLY_UP        = 0b00010000,
-    const FLY_DOWN      = 0b00100000
+bitflags!(pub struct Keys: u8 {
+    const MOVE_FORWARD  = 0b00000001;
+    const MOVE_BACKWARD = 0b00000010;
+    const STRAFE_LEFT   = 0b00000100;
+    const STRAFE_RIGHT  = 0b00001000;
+    const FLY_UP        = 0b00010000;
+    const FLY_DOWN      = 0b00100000;
 });
 
 /// First person camera settings.
@@ -41,7 +41,7 @@ pub struct FirstPersonSettings<T=f32> {
     /// This is measured in units per second.
     pub speed_vertical: T,
     /// The horizontal mouse sensitivity.
-    /// 
+    ///
     /// This is a multiplier applied to horizontal mouse movements.
     pub mouse_sensitivity_horizontal: T,
     /// The vertical mouse sensitivity.
