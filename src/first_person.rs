@@ -219,17 +219,17 @@ impl<T> FirstPerson<T>
             };
             match button {
                 x if x == settings.move_forward_button =>
-                    set(MOVE_FORWARD, -_1, dy, dz),
+                    set(Keys::MOVE_FORWARD, -_1, dy, dz),
                 x if x == settings.move_backward_button =>
-                    set(MOVE_BACKWARD, _1, dy, dz),
+                    set(Keys::MOVE_BACKWARD, _1, dy, dz),
                 x if x == settings.strafe_left_button =>
-                    set(STRAFE_LEFT, dx, dy, _1),
+                    set(Keys::STRAFE_LEFT, dx, dy, _1),
                 x if x == settings.strafe_right_button =>
-                    set(STRAFE_RIGHT, dx, dy, -_1),
+                    set(Keys::STRAFE_RIGHT, dx, dy, -_1),
                 x if x == settings.fly_up_button =>
-                    set(FLY_UP, dx, _1, dz),
+                    set(Keys::FLY_UP, dx, _1, dz),
                 x if x == settings.fly_down_button =>
-                    set(FLY_DOWN, dx, -_1, dz),
+                    set(Keys::FLY_DOWN, dx, -_1, dz),
                 x if x == settings.move_faster_button => *velocity = _2,
                 _ => {}
             }
@@ -252,17 +252,17 @@ impl<T> FirstPerson<T>
             };
             match button {
                 x if x == settings.move_forward_button =>
-                    set(release(MOVE_FORWARD, MOVE_BACKWARD, _1), dy, dz),
+                    set(release(Keys::MOVE_FORWARD, Keys::MOVE_BACKWARD, _1), dy, dz),
                 x if x == settings.move_backward_button =>
-                    set(release(MOVE_BACKWARD, MOVE_FORWARD, -_1), dy, dz),
+                    set(release(Keys::MOVE_BACKWARD, Keys::MOVE_FORWARD, -_1), dy, dz),
                 x if x == settings.strafe_left_button =>
-                    set(dx, dy, release(STRAFE_LEFT, STRAFE_RIGHT, -_1)),
+                    set(dx, dy, release(Keys::STRAFE_LEFT, Keys::STRAFE_RIGHT, -_1)),
                 x if x == settings.strafe_right_button =>
-                    set(dx, dy, release(STRAFE_RIGHT, STRAFE_LEFT, _1)),
+                    set(dx, dy, release(Keys::STRAFE_RIGHT, Keys::STRAFE_LEFT, _1)),
                 x if x == settings.fly_up_button =>
-                    set(dx, release(FLY_UP, FLY_DOWN, -_1), dz),
+                    set(dx, release(Keys::FLY_UP, Keys::FLY_DOWN, -_1), dz),
                 x if x == settings.fly_down_button =>
-                    set(dx, release(FLY_DOWN, FLY_UP, _1), dz),
+                    set(dx, release(Keys::FLY_DOWN, Keys::FLY_UP, _1), dz),
                 x if x == settings.move_faster_button => *velocity = _1,
                 _ => {}
             }

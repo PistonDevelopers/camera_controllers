@@ -181,7 +181,7 @@ OrbitZoomCamera<T> {
         let _1 = T::one();
         let _0 = T::zero();
 
-        if self.keys.contains(PAN) {
+        if self.keys.contains(Keys::PAN) {
 
             // Pan target position along plane normal to camera direction
             let dx = dx * self.settings.pan_speed;
@@ -194,7 +194,7 @@ OrbitZoomCamera<T> {
                 vec3_scale(right,dx)
             );
 
-        } else if self.keys.contains(ZOOM) {
+        } else if self.keys.contains(Keys::ZOOM) {
 
             // Zoom to / from target
             self.distance = self.distance + dy * self.settings.zoom_speed;
@@ -226,25 +226,25 @@ OrbitZoomCamera<T> {
         e.mouse_relative(|dx, dy| {
             let dx = T::from_f64(dx);
             let dy = T::from_f64(dy);
-            if self.keys.contains(ORBIT){
+            if self.keys.contains(Keys::ORBIT){
                 self.control_camera(-dx, dy);
             }
         });
 
         e.press(|button| {
             match button {
-                x if x == self.settings.orbit_button => self.keys.insert(ORBIT),
-                x if x == self.settings.pan_button => self.keys.insert(PAN),
-                x if x == self.settings.zoom_button => self.keys.insert(ZOOM),
+                x if x == self.settings.orbit_button => self.keys.insert(Keys::ORBIT),
+                x if x == self.settings.pan_button => self.keys.insert(Keys::PAN),
+                x if x == self.settings.zoom_button => self.keys.insert(Keys::ZOOM),
                 _ => {}
             }
         });
 
         e.release(|button| {
             match button {
-                x if x == self.settings.orbit_button => self.keys.remove(ORBIT),
-                x if x == self.settings.pan_button => self.keys.remove(PAN),
-                x if x == self.settings.zoom_button => self.keys.remove(ZOOM),
+                x if x == self.settings.orbit_button => self.keys.remove(Keys::ORBIT),
+                x if x == self.settings.pan_button => self.keys.remove(Keys::PAN),
+                x if x == self.settings.zoom_button => self.keys.remove(Keys::ZOOM),
                 _ => {}
             }
         });
