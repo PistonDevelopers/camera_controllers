@@ -195,10 +195,10 @@ impl<T> FirstPerson<T>
         let _360 = T::from_isize(360);
         let sqrt2 = _2.sqrt();
 
-        e.mouse_relative(|dx, dy| {
+        e.mouse_relative(|d| {
 
-            let dx = T::from_f64(dx) * settings.mouse_sensitivity_horizontal;
-            let dy = T::from_f64(dy) * settings.mouse_sensitivity_vertical;
+            let dx = T::from_f64(d[0]) * settings.mouse_sensitivity_horizontal;
+            let dy = T::from_f64(d[1]) * settings.mouse_sensitivity_vertical;
 
             *yaw = (*yaw - dx / _360 * pi / _4) % (_2 * pi);
             *pitch = *pitch + dy / _360 * pi / _4;

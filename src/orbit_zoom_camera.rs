@@ -217,15 +217,15 @@ OrbitZoomCamera<T> {
 
     /// Respond to scroll and key press/release events
     pub fn event<E: GenericEvent>(&mut self, e: &E) {
-        e.mouse_scroll(|dx, dy| {
-            let dx = T::from_f64(dx);
-            let dy = T::from_f64(dy);
+        e.mouse_scroll(|d| {
+            let dx = T::from_f64(d[0]);
+            let dy = T::from_f64(d[1]);
             self.control_camera(dx, dy);
         });
 
-        e.mouse_relative(|dx, dy| {
-            let dx = T::from_f64(dx);
-            let dy = T::from_f64(dy);
+        e.mouse_relative(|d| {
+            let dx = T::from_f64(d[0]);
+            let dy = T::from_f64(d[1]);
             if self.keys.contains(Keys::ORBIT){
                 self.control_camera(-dx, dy);
             }
