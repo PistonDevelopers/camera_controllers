@@ -123,10 +123,15 @@ pub struct FirstPerson<T=f32> {
     /// The pitch angle (in radians).
     pub pitch: T,
     /// The direction we are heading.
+    ///
+    /// By default the direction is `[0.0, 0.0, 0.0]`.
+    /// This direction is changed by user input.
     pub direction: [T; 3],
     /// The position of the camera.
     pub position: [T; 3],
-    /// The velocity we are moving in the direction.
+    /// The velocity we are moving in the direction (slow = 1, fast = 2).
+    ///
+    /// By default, this is not activated since direction is `[0.0, 0.0, 0.0]`.
     pub velocity: T,
     /// The keys that are pressed.
     keys: Keys,
@@ -148,7 +153,7 @@ impl<T> FirstPerson<T>
             keys: Keys::empty(),
             direction: [_0, _0, _0],
             position: position,
-            velocity: T::zero(),
+            velocity: T::one(),
         }
     }
 
@@ -156,7 +161,7 @@ impl<T> FirstPerson<T>
     pub fn camera(&self, dt: f64) -> Camera<T> {
         let dt = T::from_f64(dt);
         let dh = dt * self.velocity * self.settings.speed_horizontal;
-        let (dx, dy, dz) = (self.direction[0], self.direction[1], self.direction[2]);
+        let [dx, dy, dz] = self.direction;
         let (s, c) = (self.yaw.sin(), self.yaw.cos());
         let mut camera = Camera::new([
             self.position[0] + (s * dx - c * dz) * dh,
@@ -205,7 +210,7 @@ impl<T> FirstPerson<T>
             *pitch = (*pitch).min(pi / _2).max(-pi / _2);
         });
         e.press(|button| {
-            let (dx, dy, dz) = (direction[0], direction[1], direction[2]);
+            let [dx, dy, dz] = *direction;
             let sgn = |x: T| if x == _0 { _0 } else { x.signum() };
             let mut set = |k, x: T, y: T, z: T| {
                 let (x, z) = (sgn(x), sgn(z));
@@ -235,7 +240,7 @@ impl<T> FirstPerson<T>
             }
         });
         e.release(|button| {
-            let (dx, dy, dz) = (direction[0], direction[1], direction[2]);
+            let [dx, dy, dz] = *direction;
             let sgn = |x: T| if x == _0 { _0 } else { x.signum() };
             let mut set = |x: T, y: T, z: T| {
                 let (x, z) = (sgn(x), sgn(z));
