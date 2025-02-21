@@ -148,7 +148,7 @@ impl<T> FirstPerson<T>
             keys: Keys::empty(),
             direction: [_0, _0, _0],
             position: position,
-            velocity: T::one(),
+            velocity: T::zero(),
         }
     }
 
